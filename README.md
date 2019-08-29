@@ -13,8 +13,7 @@ In another CLI tab, run ```npm run lambda``` to start the api.
 
 
 
-
-
+## Other Scripts
 ### Compiles and minifies for production
 ```
 npm run build
