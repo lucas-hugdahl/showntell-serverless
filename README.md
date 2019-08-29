@@ -4,11 +4,14 @@
 ```
 npm install
 ```
-## Starteing Development Servers
+## Starting Development Servers
 
 Run ```npm run serve``` to start the Vue app.
 
 In another CLI tab, run ```npm run lambda``` to start the api.
+
+
+
 
 
 
