@@ -14,20 +14,31 @@ const headers = {
 
 exports.handler = function(event, context, callback) {  
   const data = JSON.parse(event.body);
-  User.find({username: data.username}, function(err, users) {
-    if (!err) {
-      if (users.length > 0) {
-        if (passwordHash.verify(data.password, users[0].password)) {
-          callback(null, {statusCode: 200, body: "User found: " + event.body, headers});
+  testAuth(data)
+  .then(user => {
+    callback(null, {statusCode: 200, body: JSON.stringify(user), headers});
+  }).catch(err => {
+    callback(null, {statusCode: 500,body: err || "Please try again", headers});
+  });
+}
+
+function testAuth(data) {
+  return new Promise((resolve, reject) => {
+    User.find({username: data.username}, function(err, users) {
+      if (!err) {
+        if (users.length > 0) {
+          if (passwordHash.verify(data.password, users[0].password)) {
+            resolve(users[0])
+          } else {
+            reject("Invalid username or password")
+          }
         } else {
-          callback(null, {statusCode: 500,body: "Invalid username or password", headers});
+          reject("Invalid username or password")
         }
       } else {
-        callback(null, {statusCode: 500,body: "Invalid username or password", headers});
+        reject();
       }
-    } else {
-      callback(null, {statusCode: 500,body: "Invalid username or password", headers});
-    }
+    });
   });
 }
 

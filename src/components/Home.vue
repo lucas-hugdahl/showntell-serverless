@@ -1,37 +1,54 @@
 <template>
   <div class="home">
-    <h1 class="home__bg">SHOW<br>AND<br>TELL</h1>
+    <!-- Background -->
+    <h1 class="home__bg">SHOW AND TELL SHOW AND TELL SHOW AND TELL SHOW AND TELL SHOW AND TELL SHOW AND TELL SHOW AND TELL</h1>
+    
     <div class="home__container">
-      <div class="home__nav" :class="{disabled: requestSucess}">
+      <!-- Nav tabs -->
+      <div class="home__nav" v-if="activeTab != 3" :class="{disabled: requestSucess}">
         <button :class="{active: activeTab == 0}" @click="activeTab = 0; requestError = null; requestSucess = null">Create</button>
         <button :class="{active: activeTab == 1}" @click="activeTab = 1; requestError = null; requestSucess = null">Sign In</button>
       </div>
 
+      <!-- Errow messages -->
       <div class="home__err">
         <p style="color:green;" v-if="requestSucess">{{requestSucess}}</p>
         <p style="color:red;" v-else-if="requestError">{{requestError}}</p>
       </div>
 
-
+      <!-- Create form -->
       <form v-if="activeTab == 0" @submit.prevent="createUser()" :class="{loading: isLoading, success: requestSucess}">
         <div class="form-content">
           <input v-model="newUserData.name" placeholder="Name"/>
           <input v-model="newUserData.username" placeholder="Username"/>
           <input v-model="newUserData.password" placeholder="Password" type="password"/>
-          <button type="submit">{{isCreating && !requestSucess ? 'Loading...' : 'Create'}}</button>
+          <button type="submit">Create</button>
         </div>
         <img class="form-loader" :src="loader"/>
         <img class="form-success" :src="check"/>
       </form>
+
+      <!-- Login form -->
       <form v-if="activeTab == 1" @submit.prevent="loginUser()" :class="{loading: isLoading, success: requestSucess}">
         <div class="form-content">
           <input v-model="loginUserData.username" placeholder="Username"/>
           <input v-model="loginUserData.password" placeholder="Password" type="password"/>
-          <button type="submit">{{isLogingIn && !requestSucess ? 'Loading...' : 'Login'}}</button>
+          <button type="submit">Login</button>
         </div>
         <img class="form-loader" :src="loader"/>
         <img class="form-success" :src="check"/>
       </form>
+
+
+      <!-- Show user on login -->
+      <div class="home__user" v-if="activeTab == 3">
+        <h3>{</h3>
+        <h3 v-for="(value, name) in currentUser" :key="name">
+            <strong>{{name}}:</strong>
+          {{value}}
+        </h3>
+        <h3>}</h3>
+      </div>
 
     </div>
   </div>
@@ -60,6 +77,11 @@ export default {
         password: ""
       },
       loginUserData: {
+        username: "",
+        password: ""
+      },
+      currentUser: {
+        name: "",
         username: "",
         password: ""
       }
@@ -93,7 +115,9 @@ export default {
         url: 'http://localhost:9000/.netlify/functions/user-auth',
         data: JSON.stringify(this.loginUserData),
       })
-      .then(() => {
+      .then((response) => {
+        this.activeTab = 3;
+        this.currentUser = response.data;
         this.requestError = null;
         this.requestSucess = "Login Success";
         this.isLoading = false;
@@ -119,6 +143,13 @@ export default {
     overflow: hidden;
     position: relative;
 
+    &__user {
+      text-align: left;
+      h3 {
+        text-align: left;
+      }
+    }
+
     &__bg {
       position: absolute;
       width: 100%;
@@ -129,10 +160,14 @@ export default {
       color: white;
       opacity: .4;
       font-size: 15rem;
+      line-height: 15rem;
       pointer-events: none;
+      z-index:  0;
     }
 
     &__container {
+      z-index:  1;
+      position: relative;
       margin-top: 20vh;
       background: white;
       border-radius: 5px;
@@ -182,7 +217,6 @@ export default {
         margin: 0;
       }
     }
-    
   }
 
 
