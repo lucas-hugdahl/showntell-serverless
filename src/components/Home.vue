@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     createUser() {
-      axios.post('http://localhost:9000/.netlify/functions/user-create', this.newUserData)
+      axios.post('https://awesome-bartik-15953b.netlify.com/.netlify/functions/user-create', this.newUserData)
       .then(function (response) {
         console.log(response);
       })
@@ -59,7 +59,7 @@ export default {
       });
     },
     loginUser() {
-      axios.post('http://localhost:9000/.netlify/functions/user-auth', this.loginUserData)
+      axios.post('https://awesome-bartik-15953b.netlify.com/.netlify/functions/user-auth', this.loginUserData)
       .then(function (response) {
         console.log(response);
       })
