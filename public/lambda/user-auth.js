@@ -1,24 +1,16 @@
 const mongoose = require('mongoose');
-var User = require('./models/user');
+const User = require('./models/user');
 const passwordHash = require('password-hash');
-
-mongoose.connect('mongodb+srv://lucas-admin:12345@cluster0-15rhl.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Methods': '*',
-  'Access-Control-Max-Age': '2592000',
-  'Access-Control-Allow-Credentials': 'true',
-};
+import CONSTANTS from './config/CONSTANTS';
+mongoose.connect(CONSTANTS.DATABASE_AUTH, {useNewUrlParser: true});
 
 exports.handler = function(event, context, callback) {  
   const data = JSON.parse(event.body);
   testAuth(data)
   .then(user => {
-    callback(null, {statusCode: 200, body: JSON.stringify(user), headers});
+    callback(null, {statusCode: 200, body: JSON.stringify(user), headers: CONSTANTS.HEADERS});
   }).catch(err => {
-    callback(null, {statusCode: 500,body: err || "Please try again", headers});
+    callback(null, {statusCode: 500,body: err || "Please try again", headers: CONSTANTS.HEADERS});
   });
 }
 
