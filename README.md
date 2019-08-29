@@ -6,18 +6,13 @@ npm install
 ```
 ## Starteing Development Servers
 
-Run ```npm run serve`` to start the Vue app.
+Run ```npm run serve``` to start the Vue app.
 
 In another CLI tab, run ```npm run lambda``` to start the api.
 
-### Compiles and hot-reloads Vue app for development
-```
-npm run serve
-```
 
-### Compiles and hot-reloads Lambda functions for development
-```
-npm run lambda
+
+
 ```
 
 ### Compiles and minifies for production
