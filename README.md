@@ -12,9 +12,6 @@ In another CLI tab, run ```npm run lambda``` to start the api.
 
 
 
-
-```
-
 ### Compiles and minifies for production
 ```
 npm run build
