@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "lambda": "export NODE_ENV=development && netlify-lambda serve public/lambda",
+    "lambda": "export NODE_ENV=development && netlify-lambda serve src/api",
     "build:lambda": "netlify-lambda build ./src/api",
     "build:vue": "vue-cli-service build",
     "build": "npm run build:vue && npm run build:lambda",
