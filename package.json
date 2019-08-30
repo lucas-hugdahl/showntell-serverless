@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lambda": "export NODE_ENV=development && netlify-lambda serve public/lambda",
-    "build:lambda" : "netlify-lambda build ./src/api",
-    "build:vue" : "vue-cli-service build",
+    "build:lambda": "netlify-lambda build ./src/api",
+    "build:vue": "vue-cli-service build",
     "build": "npm run build:vue && npm run build:lambda",
     "lint": "vue-cli-service lint"
   },
