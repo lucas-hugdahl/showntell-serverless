@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const passwordHash = require('password-hash');
-import CONSTANTS from './config/CONSTANTS';
+const CONSTANTS = require('./config/CONSTANTS');
 mongoose.connect(CONSTANTS.DATABASE_AUTH, {useNewUrlParser: true});
 
 exports.handler = function(event, context, callback) {  
